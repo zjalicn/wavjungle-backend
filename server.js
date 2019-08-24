@@ -4,10 +4,16 @@ const MongoClient = require("mongodb").MongoClient;
 const path = require("path");
 const http = require("http");
 const socketIO = require("socket.io");
+const cors = require("cors");
 
 //MongoDB login
 const uri =
 "mongodb+srv://nzjalic:wfLaWpPqpYzgCbGW@cluster0-vyn5n.mongodb.net/test";
+
+const corsOptions = {
+  origin: 'https://nzjalic-ecommerce.herokuapp.com',
+  optionsSuccessStatus: 200
+}
 
 let app = express();
 let server = http.createServer(app);
@@ -15,6 +21,7 @@ let io = socketIO(server);
 
 const port = process.env.PORT || 5000;
 //Express
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, "client/build")))
